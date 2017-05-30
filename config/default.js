@@ -24,7 +24,7 @@ module.exports = {
     nolog         : /\.(js|css|png|jpeg|ico|gif|svg)$/,
     level         : 'AUTO',
     format        : ':remote-addr :method :url :status :response-time ms :user-agent :content-length',
-    logFileDir    : 'E:\\raid\\logs\\mykoa2\\',
+    logFileDir    : '/raid/logs/mykoa2',
     needConsole   : true,
     replaceConsole: true
   }

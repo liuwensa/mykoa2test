@@ -51,6 +51,15 @@ app.use(views(__dirname + '/views', {extension: 'ejs'}));
 //   disableQuery                  : false
 // }));
 
+app.use(async (ctx, next) => {
+  try {
+    // 先去执行路由
+    await next();
+  } catch (error) {
+    return next(error);
+  }
+});
+
 // routes
 app.use(index.routes(), index.allowedMethods());
 

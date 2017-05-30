@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "config": "^1.26.1",
+    "fs-extra": "^3.0.1",
     "koa": "^2.2.0",
     "koa-bodyparser": "^3.2.0",
     "koa-convert": "^1.2.0",
@@ -23,7 +24,9 @@
     "koa-redis": "^3.0.0",
     "koa-router": "^7.1.1",
     "koa-static": "^3.0.0",
-    "koa-views": "^5.2.1"
+    "koa-views": "^5.2.1",
+    "mongoose": "^4.10.3",
+    "shortid": "^2.2.8"
   },
   "devDependencies": {
     "nodemon": "^1.8.1"
