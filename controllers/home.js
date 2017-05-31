@@ -10,13 +10,17 @@ module.exports = {
 };
 
 async function index(ctx, next) {
-  await ctx.render('index', {title: 'my house!'});
+  ctx.state = {
+    title: 'my house!'
+  };
+  await ctx.render('index');
 }
 
-async function test(ctx, next) {
+async function test(ctx) {
   let getData  = ctx.request.query;
   let postData = ctx.request.body;
-  ctx.body     = {
+
+  ctx.apiResults = {
     getData : getData,
     postData: postData
   };

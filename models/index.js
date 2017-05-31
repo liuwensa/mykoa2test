@@ -14,7 +14,7 @@ const connectionURL = `${dbConf.dbprefix}${dbConf.dbhost}/${dbConf.dbname}`;
 // mongoose.connect(`mongodb://${dbConf.username}:${dbConf.password}@${dbConf.dbhost}:${dbConf.port}/${dbConf.dbname}`);
 mongoose.connect(connectionURL, function (err) {
   if (err) {
-    console.log('connect to %s error', connectionURL, err.message);
+    logger.error('connect to %s error', connectionURL, err.message);
   }
 });
 

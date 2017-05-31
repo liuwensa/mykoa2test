@@ -14,7 +14,8 @@ const methodOverride = require('koa-methodoverride');
 // const CSRF           = require('koa-csrf');
 const log4js         = require('koa-log4');
 
-const index  = require('./routes/index');
+const index        = require('./routes/index');
+const handleResult = require('./middlewares/handleResult');
 
 const redisStore = koaRedis(config.redis);
 // const redisStore = koaRedis({
@@ -51,17 +52,18 @@ app.use(views(__dirname + '/views', {extension: 'ejs'}));
 //   disableQuery                  : false
 // }));
 
-app.use(async (ctx, next) => {
-  try {
-    // 先去执行路由
-    await next();
-  } catch (error) {
-    return next(error);
-  }
-});
+app.use(handleResult({}));
 
 // routes
 app.use(index.routes(), index.allowedMethods());
+
+// 404处理
+app.use(async(ctx, next) => {
+  ctx.status = 404;
+  ctx.body   = {
+    code: 404
+  }
+});
 
 app.listen(config.projPort, (err) => {
   if (err) {
