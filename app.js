@@ -79,3 +79,5 @@ app.listen(config.projPort, (err) => {
     logger.info(`server start on ${config.projPort}`);
   }
 });
+
+module.exports = app;

@@ -12,7 +12,9 @@ const router = Router({
   prefix: '/content'
 });
 
+router.get('/', contentctrl.getContents);
 
-router.get('/test', contentctrl.getContents);
+router.post('/', contentctrl.addContent);
+
 
 module.exports = router;
