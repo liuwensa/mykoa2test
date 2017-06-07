@@ -7,19 +7,20 @@
 const Router  = require('koa-router');
 const koaBody = require('koa-body');
 
-const uploadCtrl = require('../controllers/upload');
+const uploadCtrl     = require('../controllers/upload');
+const uploadByBusboy = require('../middlewares/uploadByBusboy');
 
-const uploadParser = koaBody({
+const koaBodyParser = koaBody({
   multipart : true,
   // hash      : 'md5',
   formidable: {uploadDir: config.tmpDir}
 });
 
 const router = Router({
-  prefix: '/'
+  prefix: '/upload'
 });
 
-
-router.post('upload', uploadParser, uploadCtrl.uploadFiles);
+router.post('/koabody', koaBodyParser, uploadCtrl.uploadFileByKoaBody);
+router.post('/busboy', uploadByBusboy.uploadFileByBusboy, uploadCtrl.uploadFilesByBusboy);
 
 module.exports = router;

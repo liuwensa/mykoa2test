@@ -12,17 +12,58 @@ Promise.promisifyAll(fs);
 Promise.promisifyAll(gm.prototype);
 
 module.exports = {
-  uploadFiles
+  uploadFileByKoaBody,
+  uploadFilesByBusboy
 };
 
-async function uploadFiles(ctx) {
-  const files = ctx.request.body.files.file;
+/**
+ * 上传图片，可多张图片上传
+ * @param {Object} ctx
+ */
+async function uploadFileByKoaBody(ctx) {
+  // const fields = ctx.request.body.fields;
+  let files = ctx.request.body.files.file;
 
-  if (files.size > 0) {
-    const filePath  = files.path;
-    const filePaths = files.path.split(path.sep);
-    const fileName  = filePaths[filePaths.length - 1].replace('upload_', '');
-    const fileSize  = files.size;
+  if (!Array.isArray(files)) {
+    files = [files];
+  }
+
+  const results = [];
+  for (let i = 0, len = files.length; i < len; i++) {
+    const filePath = files[i].path;
+    const fileSize = files[i].size;
+    const fileName = utils.myuuid();
+
+    const options = {
+      fileSize: fileSize,
+      fileName: fileName,
+      filePath: filePath
+    };
+    results.push(await saveFile(options));
+  }
+  ctx.body = results;
+}
+
+/**
+ * Busboy包上传图片单张上传
+ * @param {Object} ctx
+ */
+async function uploadFilesByBusboy(ctx) {
+  // const fields = ctx.request.body.fields;
+  const files = ctx.request.body.files;
+
+  ctx.body = await saveFile(files);
+}
+
+/**
+ * 临时文件重新命名重新分配目录
+ * @param {Object} options
+ */
+async function saveFile(options) {
+  const fileSize = options.fileSize;
+  if (fileSize > 0) {
+    const filePath = options.filePath;
+    const fileName = options.fileName;
 
     const imgInfo = await gm(filePath).identifyAsync();
 
@@ -48,16 +89,16 @@ async function uploadFiles(ctx) {
     fs.mkdirsSync(path.dirname(newPath));
     fs.renameSync(filePath, newPath);
     /* eslint-enable */
-    ctx.body = {
+
+    return await {
       filePath: newPath,
       fileSize: fileSize,
       size    : size,
       format  : format
     };
   } else {
-    ctx.body = {
-      status: false,
-      msg   : '上传失败'
-    }
+    return Promise.reject('上传失败，资源大小为0！')
   }
 }
+
+

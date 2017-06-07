@@ -8,5 +8,6 @@ global.shortid = require('shortid');
 global.Promise = require('bluebird');
 global.config  = require('config');
 
+global.utils  = require('./utils');
 global.logger = require('./logger').getLogger('main');
 global.db     = require('./models');
