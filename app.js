@@ -13,6 +13,7 @@ const convert        = require('koa-convert');
 const methodOverride = require('koa-methodoverride');
 // const CSRF           = require('koa-csrf');
 const log4js         = require('koa-log4');
+const koaStatic      = require('koa-static');
 
 const index        = require('./routes/index');
 const handleResult = require('./middlewares/handleResult');
@@ -38,7 +39,7 @@ app.use(log4js.koaLogger(logger, config.log));
 app.use(bodyparser({enableTypes: ['json', 'form', 'text']}));
 app.use(methodOverride());
 app.use(json());
-app.use(require('koa-static')(__dirname + '/public'));
+app.use(koaStatic(__dirname + '/public'));
 
 app.use(views(__dirname + '/views', {extension: 'ejs'}));
 
