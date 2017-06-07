@@ -4,19 +4,22 @@
 
 'use strict';
 
-const path = require('path');
 const Router  = require('koa-router');
-const koaBody = require('koa-body')({
-  multipart: true,
-  formidable: { uploadDir: '/raid/uploadfiles' }
-});
+const koaBody = require('koa-body');
+
 const uploadCtrl = require('../controllers/upload');
+
+const uploadParser = koaBody({
+  multipart : true,
+  // hash      : 'md5',
+  formidable: {uploadDir: config.tmpDir}
+});
 
 const router = Router({
   prefix: '/'
 });
 
 
-router.post('upload', koaBody, uploadCtrl.uploadFiles);
+router.post('upload', uploadParser, uploadCtrl.uploadFiles);
 
 module.exports = router;

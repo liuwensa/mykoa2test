@@ -14,6 +14,12 @@ const methodOverride = require('koa-methodoverride');
 // const CSRF           = require('koa-csrf');
 const log4js         = require('koa-log4');
 const koaStatic      = require('koa-static');
+const fs             = require('fs-extra');
+
+/* eslint-disable */
+fs.mkdirsSync(config.uploadDir);
+fs.mkdirsSync(config.tmpDir);
+/* eslint-enable */
 
 const index        = require('./routes/index');
 const handleResult = require('./middlewares/handleResult');
