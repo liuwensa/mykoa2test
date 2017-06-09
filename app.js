@@ -15,6 +15,7 @@ const methodOverride = require('koa-methodoverride');
 const log4js         = require('koa-log4');
 const koaStatic      = require('koa-static');
 const fs             = require('fs-extra');
+const jwt            = require('koa-jwt');
 
 /* eslint-disable */
 fs.mkdirsSync(config.uploadDir);
@@ -60,6 +61,9 @@ app.use(views(__dirname + '/views', {extension: 'ejs'}));
 // }));
 
 app.use(handleResult({}));
+
+// app.use(jwt({secret: 'shared-secret'}).unless({ path: [/^\/public/] }));
+app.use(jwt({secret: 'shared-secret'}).unless({ path: ['/login'] }));
 
 // routes
 app.use(index.routes(), index.allowedMethods());
