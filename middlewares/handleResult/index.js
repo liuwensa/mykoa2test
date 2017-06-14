@@ -16,12 +16,9 @@ async function responseFormatter(ctx) {
       desc   : 'success',
       message: ctx.apiResults || {}
     }
+  } else if (ctx.renderView) {
+    return await ctx.render('index', ctx.renderView);
   }
-  // else if (ctx.renderView) {
-  //   console.log('===============', ctx.renderView, ctx.state)
-  //   // await ctx.render(ctx.renderView);
-  //   return await ctx.render('index', { title: 'my house!' });
-  // }
 }
 
 function urlFilter(options = {}) {
@@ -29,7 +26,7 @@ function urlFilter(options = {}) {
     try {
       // 先去执行路由
       await next();
-      responseFormatter(ctx);
+      await responseFormatter(ctx);
     } catch (error) {
       // const errorResult = new resError(error);
       // const errorInfo   = errorResult.errorInfo;

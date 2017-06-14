@@ -13,10 +13,9 @@ module.exports = {
 };
 
 async function index(ctx, next) {
-  ctx.state = {
+  ctx.renderView = {
     title: 'my house!'
   };
-  await ctx.render('index');
 }
 
 async function test(ctx) {
