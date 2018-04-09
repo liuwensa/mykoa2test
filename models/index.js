@@ -22,14 +22,14 @@ mongoose.set('debug', (collectionName, methodName, arg1, arg2, arg3) => {
   logger.info('[Mongoose] :', collectionName, methodName, arg1, arg2, arg3);
 });
 
-fs
+fs// eslint-disable-line
   .readdirSync(__dirname)
   .filter(function (file) {
     return (file.indexOf('.') !== -1) && (file !== 'index.js') && (file !== 'db');
   })
   .forEach(function (file) {
     const modelName = file.replace('.js', '');
-    dbs[modelName]  = require(path.join(__dirname, file));
+    dbs[modelName]  = require(path.join(__dirname, file));// eslint-disable-line
   });
 
 module.exports = dbs;

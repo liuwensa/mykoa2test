@@ -97,8 +97,6 @@ async function saveFile(options) {
       format  : format
     };
   } else {
-    return Promise.reject('上传失败，资源大小为0！')
+    return Promise.reject('上传失败，资源大小为0！');
   }
 }
-
-

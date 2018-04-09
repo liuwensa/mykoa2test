@@ -12,15 +12,15 @@ module.exports = {
   login
 };
 
-async function index(ctx, next) {
+async function index(ctx) {
   ctx.renderView = {
     title: 'my house!'
   };
 }
 
 async function test(ctx) {
-  let getData  = ctx.request.query;
-  let postData = ctx.request.body;
+  const getData  = ctx.request.query;
+  const postData = ctx.request.body;
 
   ctx.apiResults = {
     stateData: ctx.state,
@@ -29,7 +29,7 @@ async function test(ctx) {
   };
 }
 
-async function login(ctx, next) {
+async function login(ctx) {
   const query    = ctx.request.body;
   const username = query.username;
   const password = query.password;

@@ -14,10 +14,9 @@ module.exports = {
 /**
  * getContents
  * @param ctx
- * @param next
  * @returns {Promise.<TResult>}
  */
-async function getContents(ctx, next) {
+async function getContents(ctx) {
   const results = await contentService.getContents();
   ctx.body      = {
     code: 200,
@@ -28,17 +27,16 @@ async function getContents(ctx, next) {
 /**
  * 增加文档
  * @param {Object} ctx
- * @param {Object} next
  * @returns {Promise.<TResult>}
  */
-async function addContent(ctx, next) {
+async function addContent(ctx) {
   // const options = ctx.request.body;
   const options = {
     title      : '你从哪里来，我的朋友',
     tags       : '朋友,哪里',
     keywords   : '朋友',
     discription: '二级打怪',
-    author     : '我的',
+    author     : '我的'
   };
 
   const results = await contentService.addContent(options);

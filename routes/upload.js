@@ -12,6 +12,7 @@ const uploadByBusboy = require('../middlewares/uploadByBusboy');
 
 const koaBodyParser = koaBody({
   multipart : true,
+
   // hash      : 'md5',
   formidable: {uploadDir: config.tmpDir}
 });

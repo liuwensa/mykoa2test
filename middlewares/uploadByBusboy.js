@@ -46,7 +46,7 @@ function uploadFileByBusboy(ctx, next) {
         files.fileName = fileName;
         files.filePath = filePath;
         resolve();
-      })
+      });
     });
 
     // 解析表单中其他字段信息
@@ -67,7 +67,7 @@ function uploadFileByBusboy(ctx, next) {
       reject(err);
     });
 
-    req.pipe(busboy)
+    req.pipe(busboy);
   })
     .then(() => next());
 }

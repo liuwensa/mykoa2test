@@ -6,7 +6,7 @@
 
 const lodash = require('lodash');
 
-const resError     = require('./resError');
+// const resError     = require('./resError');
 const getErrorInfo = require('./getErrorInfo');
 
 async function responseFormatter(ctx) {
@@ -15,7 +15,7 @@ async function responseFormatter(ctx) {
       code   : 0,
       desc   : 'success',
       message: ctx.apiResults || {}
-    }
+    };
   } else if (ctx.renderView) {
     return await ctx.render('index', ctx.renderView);
   }
@@ -45,9 +45,9 @@ function urlFilter(options = {}) {
         code   : errorInfo.code,
         desc   : errorInfo.desc,
         message: errorInfo.message || {}
-      }
+      };
     }
-  }
+  };
 }
 
 module.exports = urlFilter;

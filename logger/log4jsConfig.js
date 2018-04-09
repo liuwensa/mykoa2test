@@ -1,51 +1,50 @@
 'use strict';
 
-const path   = require('path');
-const fs     = require('fs-extra');
+const path = require('path');
 
-const logConf = config.log;
-
-// eslint-disable-next-line
-fs.mkdirpSync(path.join(logConf.logFileDir, 'main'));
-
-const appenders = [
-  {
-    category            : 'main',
-    type                : 'dateFile',
-    filename            : path.join(logConf.logFileDir, 'main/log-'),
-    pattern             : 'yyyyMMdd',
-    alwaysIncludePattern: true,
-    maxLogSize          : 1024 * 1024 * 30
-  },
-  {
-    category: 'main',
-    type    : 'logLevelFilter',
-    level   : 'WARN',
-    appender: {
-      type      : 'file',
-      filename  : path.join(logConf.logFileDir, 'log.WARN'),
-      maxLogSize: 1024 * 1024 * 30
-    }
-  },
-  {
-    category: 'main',
-    type    : 'logLevelFilter',
-    level   : 'ERROR',
-    appender: {
-      type      : 'file',
-      filename  : path.join(logConf.logFileDir, 'log.ERROR'),
-      maxLogSize: 1024 * 1024 * 30
-    }
-  }
-];
-
-if (config.log.needConsole) {
-  appenders.push({
-    type: 'console'
-  });
-}
+const logConf    = config.log;
+const logFileDir = logConf.logFileDir;
 
 module.exports = {
-  appenders     : appenders,
-  replaceConsole: config.log.replaceConsole
+  appenders : {
+    console  : {
+      type: 'console'
+    },
+    main     : {
+      type                : 'dateFile',
+      filename            : path.join(logFileDir, 'main/log-'),
+      pattern             : 'yyyyMMdd',
+      alwaysIncludePattern: true,
+      compress            : true,
+      maxLogSize          : 1024 * 1024 * 30
+    },
+    mainerror: {
+      type      : 'file',
+      filename  : path.join(logFileDir, 'error.log'),
+      compress  : true,
+      maxLogSize: 1024 * 1024 * 30
+    },
+    error    : {
+      type    : 'logLevelFilter',
+      level   : 'ERROR',
+      appender: 'mainerror'
+    },
+    mainwarn : {
+      type      : 'file',
+      filename  : path.join(logFileDir, 'warn.log'),
+      compress  : true,
+      maxLogSize: 1024 * 1024 * 30
+    },
+    warns    : {
+      type    : 'logLevelFilter',
+      level   : 'warn',
+      appender: 'mainwarn'
+    }
+  },
+  categories: {
+    default: {
+      appenders: ['console', 'main', 'error', 'warns'],
+      level    : 'all'
+    }
+  }
 };
